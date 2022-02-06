@@ -6,8 +6,6 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState();
   const handleNameChange = (event) => {
     const value = event.target.value;
     setName(value);
@@ -20,29 +18,22 @@ const Signup = () => {
     const value = event.target.value;
     setPassword(value);
   };
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(name, email, password);
+
+    try {
+      const response = await axios.post(
+        " https://lereacteur-vinted-api.herokuapp.com/user/signup",
+        { name: name, email: email, password: password }
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
   };
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post(
-          " https://lereacteur-vinted-api.herokuapp.com/signup",
-          { name: name, email: email, password: password }
-        );
-        console.log(response.data);
-        setData(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    fetchData();
-  }, []);
-  return isLoading ? (
-    <span>En cours de chargement ...</span>
-  ) : (
+
+  return (
     <div>
       <h1>SeConnecter</h1>
       <form onSubmit={handleSubmit}>
@@ -71,7 +62,7 @@ const Signup = () => {
         />{" "}
         <br />
         <button type="submit" value="Submit">
-          SeConnecter
+          Se Connecter
         </button>
       </form>
     </div>
