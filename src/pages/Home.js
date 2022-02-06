@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import imagebanniere from "../img/imagebanniere.jpeg";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 const Home = ({}) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
