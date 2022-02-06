@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -26,10 +27,13 @@ const Signup = () => {
     try {
       const response = await axios.post(
         "https://lereacteur-vinted-api.herokuapp.com/user/signup",
-        { name: name, email: email, password: password }
+        { username: name, email: email, password: password }
       );
+      const token = response.data.token;
+      Cookies.set("token", token);
+      //   console.log(response.data.token);
     } catch (error) {
-      console.log(error.message);
+      console.log(error.response);
     }
   };
 
