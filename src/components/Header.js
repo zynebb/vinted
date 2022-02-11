@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import logo from "../img/logo.png";
-const Header = () => {
+const Header = ({ token, setUser }) => {
   return (
     <span>
       <img
@@ -20,17 +21,28 @@ const Header = () => {
       >
         Articles
       </button>
-      <button
-        style={{
-          fontSize: 12,
-          marginLeft: 30,
-          width: 152,
-          height: 27,
-          color: "#017580",
-        }}
-      >
-        s'inscrire | se connecter
-      </button>
+      {token !== null ? (
+        <button
+          onClick={() => {
+            setUser(null);
+          }}
+        >
+          Se déconnecter
+        </button>
+      ) : (
+        <>
+          {" "}
+          <Link to="/user/signup">s'inscrire</Link>
+          <Link to="/user/login">se connecter</Link>
+        </>
+      )}
+      {/* // style={{ */}
+      {/* //   fontSize: 12,
+        //   marginLeft: 30,
+        //   width: 152,
+        //   height: 27,
+        //   color: "#017580",
+        // }} */}
       <button
         style={{
           fontSize: 12,
