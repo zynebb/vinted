@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "../img/logo.png";
 const Header = ({ token, setUser }) => {
   return (
-    <span>
+    <div>
       <img
         src={logo}
         alt=""
@@ -32,8 +32,54 @@ const Header = ({ token, setUser }) => {
       ) : (
         <>
           {" "}
-          <Link to="/user/signup">s'inscrire</Link>
-          <Link to="/user/login">se connecter</Link>
+          <button
+            style={{
+              borderRadius: 5,
+              backgroundColor: "white",
+              marginRight: 20,
+              borderWidth: 1,
+              borderColor: "#017580",
+              width: 90,
+              height: 25,
+              marginLeft: 20,
+            }}
+          >
+            {" "}
+            <Link
+              to="/signup"
+              style={{
+                textDecoration: "none",
+
+                color: "#017580",
+              }}
+            >
+              s'inscrire
+            </Link>
+          </button>
+          <button
+            style={{
+              borderRadius: 5,
+              backgroundColor: "white",
+              marginRight: 20,
+              borderWidth: 1,
+              borderColor: "#017580",
+              width: 100,
+              height: 25,
+              marginLeft: 20,
+            }}
+          >
+            {" "}
+            <Link
+              to="/login"
+              style={{
+                textDecoration: "none",
+
+                color: "#017580",
+              }}
+            >
+              se connecter
+            </Link>
+          </button>
         </>
       )}
       {/* // style={{ */}
@@ -46,8 +92,10 @@ const Header = ({ token, setUser }) => {
       <button
         style={{
           fontSize: 12,
-          marginLeft: 10,
-          backgroundColor: "#017580",
+          marginLeft: 190,
+          marginTop: 10,
+          marginBottom: 10,
+          backgroundColor: " #2DB0BA ",
           color: "white",
           fontWeight: "lighter",
           borderStyle: "none",
@@ -56,29 +104,9 @@ const Header = ({ token, setUser }) => {
           borderRadius: 5,
         }}
       >
-        vends maintenant
+        <Link to="/publish">vends maintenant</Link>
       </button>
-      <button
-        style={{
-          border: "grey",
-          color: "grey",
-          borderRadius: 30,
-          marginLeft: 10,
-        }}
-      >
-        {" "}
-        ?{" "}
-      </button>
-      <button
-        style={{
-          backgroundColor: "white",
-          borderStyle: "none",
-          marginLeft: 20,
-        }}
-      >
-        FR
-      </button>
-    </span>
+    </div>
   );
 };
 export default Header;

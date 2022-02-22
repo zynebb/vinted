@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const Navigate = useNavigate();
   const handleEmailChange = (event) => {
     const value = event.target.value;
     setEmail(value);
@@ -24,9 +24,14 @@ const Login = ({ setUser }) => {
         "https://lereacteur-vinted-api.herokuapp.com/user/login",
         { email: email, password: password }
       );
-      console.log(response);
-      setUser(response.data.token);
-      navigate("/");
+      if (response.data.token) {
+        setUser(response.data.token);
+        setIsLoading(false);
+        <Navigate to="/publish" />;
+      } else {
+        alert("Une erreur est survenue, veuillez rééssayer.");
+      }
+
       // let token = Cookies.get("token");
       // console.log(token);
       //   console.log("token");

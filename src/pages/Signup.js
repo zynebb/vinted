@@ -1,8 +1,8 @@
-import { useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+// import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 import axios from "axios";
 
-const Signup = () => {
+const Signup = (setUser) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -28,7 +28,12 @@ const Signup = () => {
         "https://lereacteur-vinted-api.herokuapp.com/user/signup",
         { username: name, email: email, password: password }
       );
-      console.log(response.data);
+      // console.log(response.data);
+      if (response.data.token) {
+        setUser(response.data.token);
+      } else {
+        alert("une erreur est survenue");
+      }
     } catch (error) {
       console.log(error.response);
     }

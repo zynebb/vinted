@@ -3,13 +3,15 @@ import axios from "axios";
 import imagebanniere from "../img/imagebanniere.jpeg";
 import { Link } from "react-router-dom";
 
-const Home = ({}) => {
+const Home = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const limit = 10;
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        " https://lereacteur-vinted-api.herokuapp.com/offers"
+        `https://lereacteur-vinted-api.herokuapp.com/offers?limit=${limit}&page=${page}`
       );
       // console.log(response.data);
       setData(response.data);
@@ -17,7 +19,7 @@ const Home = ({}) => {
     };
 
     fetchData();
-  }, []);
+  }, [page]);
 
   return isLoading ? (
     <span>En cours de chargement... </span>
@@ -37,6 +39,7 @@ const Home = ({}) => {
             alt=""
           />
         </div>
+
         <div
           style={{
             paddingLeft: 30,
@@ -84,32 +87,41 @@ const Home = ({}) => {
           </div>
         </div>
       </div>
-      <div style={{ paddingTop: 200, display: "flex", flexWrap: "wrap" }}>
-        {data.offers.map((offer, index) => {
-          return (
-            <div
-              style={{
-                height: 440,
-                width: 240,
-              }}
-              key={offer._id}
-            >
-              <Link to={`/offer/${offer._id}`} style={{ color: "grey" }}>
-                <span>{offer.owner.username}</span>
-                <span>
-                  <img
-                    style={{ flexShrink: 0, height: 360, width: 230 }}
-                    src={offer.product_image.secure_url}
-                    alt=""
-                  />
-                </span>{" "}
-                <span>{offer.product_name}</span>{" "}
-              </Link>{" "}
-              <br />
-              <span>{offer.product_price} €</span>
-            </div>
-          );
-        })}
+
+      <div>
+        <div style={{ paddingTop: 200, display: "flex", flexWrap: "wrap" }}>
+          <div style={{ paddingLeft: 950 }}>
+            <button onClick={() => setPage(page - 1)}>Page précédente</button>
+            <button onClick={() => setPage(page + 1)}>Page suivante</button>
+          </div>{" "}
+          <div style={{ display: "flex", flexWrap: "wrap" }}>
+            {data.offers.map((offer, index) => {
+              return (
+                <div
+                  style={{
+                    height: 440,
+                    width: 240,
+                  }}
+                  key={offer._id}
+                >
+                  <Link to={`/offer/${offer._id}`} style={{ color: "grey" }}>
+                    <span>{offer.owner.username}</span>
+                    <span>
+                      <img
+                        style={{ flexShrink: 0, height: 360, width: 230 }}
+                        src={offer.product_image.secure_url}
+                        alt=""
+                      />
+                    </span>{" "}
+                    <span>{offer.product_name}</span>{" "}
+                  </Link>{" "}
+                  <br />
+                  <span>{offer.product_price} €</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );
